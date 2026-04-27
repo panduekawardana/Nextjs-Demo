@@ -101,7 +101,7 @@ const eventSchema = new Schema<IEvent>(
 );
 
 // Auto-generate slug from title only if title changes
-eventSchema.pre<IEvent>('save', async function (next) {
+eventSchema.pre<IEvent>('save', async function () {
   // Only regenerate slug if title is modified
   if (this.isModified('title')) {
     this.slug = this.title
@@ -116,7 +116,7 @@ eventSchema.pre<IEvent>('save', async function (next) {
   if (this.isModified('date')) {
     const dateObj = new Date(this.date);
     if (isNaN(dateObj.getTime())) {
-      return next(new Error('Invalid date format'));
+      throw new Error('Invalid date format');
     }
     this.date = dateObj.toISOString().split('T')[0];
   }
@@ -125,34 +125,31 @@ eventSchema.pre<IEvent>('save', async function (next) {
   if (this.isModified('time')) {
     const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
     if (!timeRegex.test(this.time)) {
-      return next(new Error('Time must be in HH:mm format'));
+      throw new Error('Time must be in HH:mm format');
     }
   }
 
-  // Validate all required string fields are non-empty
   if (!this.title?.trim()) {
-    return next(new Error('Title cannot be empty'));
+    throw new Error('Title cannot be empty');
   }
   if (!this.description?.trim()) {
-    return next(new Error('Description cannot be empty'));
+    throw new Error('Description cannot be empty');
   }
   if (!this.overview?.trim()) {
-    return next(new Error('Overview cannot be empty'));
+    throw new Error('Overview cannot be empty');
   }
   if (!this.venue?.trim()) {
-    return next(new Error('Venue cannot be empty'));
+    throw new Error('Venue cannot be empty');
   }
   if (!this.location?.trim()) {
-    return next(new Error('Location cannot be empty'));
+    throw new Error('Location cannot be empty');
   }
   if (!this.audience?.trim()) {
-    return next(new Error('Audience cannot be empty'));
+    throw new Error('Audience cannot be empty');
   }
   if (!this.organizer?.trim()) {
-    return next(new Error('Organizer cannot be empty'));
+    throw new Error('Organizer cannot be empty');
   }
-
-  next();
 });
 
 // Create unique index on slug

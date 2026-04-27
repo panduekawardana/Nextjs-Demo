@@ -32,24 +32,18 @@ const bookingSchema = new Schema<IBooking>(
 );
 
 // Verify referenced event exists before saving booking
-bookingSchema.pre<IBooking>('save', async function (next) {
+bookingSchema.pre<IBooking>('save', async function () {
   const Event = mongoose.model('Event');
 
   try {
     const eventExists = await Event.findById(this.eventId);
 
     if (!eventExists) {
-      return next(new Error('Referenced event does not exist'));
+      throw new Error('Referenced event does not exist');
     }
   } catch (error) {
-    return next(
-      new Error(
-        error instanceof Error ? error.message : 'Error validating event'
-      )
-    );
-  }
-
-  next();
+    throw new Error(error instanceof Error ? error.message : 'Error validating event');
+  };
 });
 
 // Index on eventId for efficient queries
