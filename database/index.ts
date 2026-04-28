@@ -1,12 +1,16 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
+import { DATABASE_URL } from '@/config/env';
 
 const globalForDb = globalThis as unknown as {
     pool: Pool | undefined;
 }
 
 export const pool = globalForDb.pool ?? new Pool({
-    connectionString: process.env.DATABASE_URL!,
+    connectionString:  DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    },
 });
 
 if(process.env.NODE_ENV !== 'production') {
