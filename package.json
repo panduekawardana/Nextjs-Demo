@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "migrate": "npx drizzle-kit migrate",
+    "generate": "npx drizzle-kit generate",
+    "push": "npx drizzle-kit push"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -14,8 +17,6 @@
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "lucide-react": "^1.8.0",
-    "mongodb": "^7.2.0",
-    "mongoose": "^9.5.0",
     "next": "16.2.4",
     "ogl": "^1.0.11",
     "pg": "^8.20.0",
@@ -25,6 +26,7 @@
     "react-dom": "19.2.4",
     "shadcn": "^4.4.0",
     "tailwind-merge": "^3.5.0",
+    "uuid": "^14.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

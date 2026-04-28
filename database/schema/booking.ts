@@ -1,15 +1,9 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { PgTable, varchar, integer, timestamp, pgTable } from "drizzle-orm/pg-core";
-
-
-// Helper tiemestams
-const timestamps = {
-    updated_at: timestamp(),
-    created_at: timestamp().defaultNow().notNull(),
-    deleted_at: timestamp(),
-}
-
-export const events = pgTable('events', {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
-     
-})
+import { pgTable, serial, text, uuid, varchar } from 'drizzle-orm/pg-core';
+import { events, timestamps } from './events';
+export const booking = pgTable('bookings', {
+    id: serial('id').primaryKey(),
+    eventId: uuid('event_id').references(() => events.id).notNull(),
+    name: text('name').notNull(),
+    email: varchar('email').notNull(),
+    ...timestamps
+}); 
