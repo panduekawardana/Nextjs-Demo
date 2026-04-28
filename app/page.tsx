@@ -1,7 +1,5 @@
 import EventCard from '@/components/EventCard'
 import { ExploreButton } from '@/components/ExploreButton'
-import { events } from '@/lib/events'
-
 const page = () => {
   return (
     <section>
@@ -11,11 +9,11 @@ const page = () => {
       
       <div>
         <ul className="events">
-          {events.map((event) => (
+          {/* {events.map((event) => (
             <div key={event.title}>
               <EventCard {...event}/>
             </div>
-          ))}
+          ))} */}
         </ul>  
       </div>  
     </section>
