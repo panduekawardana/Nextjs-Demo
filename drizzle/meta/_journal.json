@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1777355237023,
-      "tag": "0000_amused_major_mapleleaf",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1777357256964,
-      "tag": "0001_strong_guardsmen",
+      "when": 1777380965571,
+      "tag": "0000_nostalgic_storm",
       "breakpoints": true
     }
   ]

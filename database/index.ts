@@ -28,3 +28,5 @@ export async function checkDBConnection() {
         return {ok: false, e}
     }
 }
+
+export default pool;
