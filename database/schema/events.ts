@@ -14,7 +14,7 @@ export const tagEnum = pgEnum('tags', ['Claude', 'Microsoft', 'Google', 'Amazon'
 
 export const events = pgTable('events', {
     id: uuid('id').primaryKey().defaultRandom(),
-    title: varchar('title', { length: 255 }).notNull(),
+    title: varchar('title', { length: 255 }).notNull().unique(),
     overview: text('overview').notNull(),
     image: varchar('image').notNull(),
     venue: varchar('venue').notNull(),
