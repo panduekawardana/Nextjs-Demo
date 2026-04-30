@@ -1,6 +1,21 @@
 import EventCard from '@/components/EventCard'
 import { ExploreButton } from '@/components/ExploreButton'
-const page = () => {
+import { NEXT_PUBLIC_BASE_URL } from '@/config/env';
+
+type EventListItem = {
+  id: string;
+  title: string;
+  image: string;
+  slug: string;
+  location: string;
+  date: string;
+  time: string;
+};
+
+const Page = async () => {
+  const response  = await fetch(`${NEXT_PUBLIC_BASE_URL}/api/events`);
+  const { events = [] }: { events: EventListItem[] } = await response.json();
+
   return (
     <section>
       <h1 className='text-center mt-10'>The Hub for Every Day  <br/> Event You Can`t Miss</h1>
@@ -9,14 +24,14 @@ const page = () => {
       
       <div>
         <ul className="events">
-          {/* {events.map((event) => (
-            <div key={event.title}>
-              <EventCard {...event}/>
-            </div>
-          ))} */}
+          {events && events.length > 0 && events.map((e) => (
+            <ol key={e.id || e.title}>
+              <EventCard {...e}/>
+            </ol>
+          ))}
         </ul>  
       </div>  
     </section>
   )
 }
-export default page
+export default Page

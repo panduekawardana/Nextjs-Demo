@@ -3,7 +3,6 @@ CREATE TYPE "public"."tags" AS ENUM('Claude', 'Microsoft', 'Google', 'Amazon', '
 CREATE TABLE "events" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"title" varchar(255) NOT NULL,
-	"description" text,
 	"overview" text NOT NULL,
 	"image" varchar NOT NULL,
 	"venue" varchar NOT NULL,
@@ -17,7 +16,8 @@ CREATE TABLE "events" (
 	"tags" "tags",
 	"updated_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"deleted_at" timestamp
+	"deleted_at" timestamp,
+	CONSTRAINT "events_title_unique" UNIQUE("title")
 );
 --> statement-breakpoint
 CREATE TABLE "bookings" (

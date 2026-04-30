@@ -1,6 +1,6 @@
 {
-  "id": "dd3e7278-e214-4da9-9cf4-38e60ec9d318",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "7714e75c-c95a-47c7-8ebd-72a4212dd2c6",
+  "prevId": "dd3e7278-e214-4da9-9cf4-38e60ec9d318",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -23,6 +23,12 @@
         },
         "overview": {
           "name": "overview",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
           "type": "text",
           "primaryKey": false,
           "notNull": true

@@ -16,6 +16,7 @@ export const events = pgTable('events', {
     id: uuid('id').primaryKey().defaultRandom(),
     title: varchar('title', { length: 255 }).notNull().unique(),
     overview: text('overview').notNull(),
+    description: text('description').notNull(),
     image: varchar('image').notNull(),
     venue: varchar('venue').notNull(),
     location: varchar('location').notNull(),
