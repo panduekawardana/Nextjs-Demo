@@ -1,6 +1,7 @@
 import EventCard from '@/components/EventCard'
 import { ExploreButton } from '@/components/ExploreButton'
 import { NEXT_PUBLIC_BASE_URL } from '@/config/env';
+import { cacheLife } from 'next/cache';
 
 type EventListItem = {
   id: string;
@@ -13,6 +14,8 @@ type EventListItem = {
 };
 
 const Page = async () => {
+  'use cahce'
+  cacheLife('hours');
   const response  = await fetch(`${NEXT_PUBLIC_BASE_URL}/api/events`);
   const { events = [] }: { events: EventListItem[] } = await response.json();
 

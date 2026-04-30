@@ -1,7 +1,42 @@
-const BookEvent = () => {
-  return (
-    <div>BookEvent</div>
-  )
-}
+'use client';
 
-export default BookEvent
+import {useState} from 'react';
+
+const BookEvent = () => {
+  const [email, setEmail] = useState('');
+  const [submitted, setSumbitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setTimeout(() => {
+      setSumbitted(true)
+    }, 1000)
+  };
+
+  return (
+    <div id="book-event">
+      {submitted ? (
+        <p className="text-sm">Thank you for signing up!</p>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email">Email Address</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              id="email"
+              placeholder="Enter your email address"
+              className='outline-none'
+            />
+
+            <button type='submit'>Send</button>
+          </div>
+        </form>
+      )}
+    </div>
+  );
+};
+
+export default BookEvent;

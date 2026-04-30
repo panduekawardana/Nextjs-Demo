@@ -1,3 +1,4 @@
+import BookEvent from "@/components/BookEvent";
 import { NEXT_PUBLIC_BASE_URL } from "@/config/env";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,6 +42,8 @@ const formatDate = (value: string | null | undefined) => {
     year: "numeric",
   }).format(new Date(value));
 };
+
+const booking: number = 10;
 
 const formatTime = (value: string | null | undefined) => {
   if (!value) return "-";
@@ -121,23 +124,26 @@ const EventDetailPage = async ({ params }: { params: Promise<{ slug: string }> }
           </section>
         </div>
 
-        <aside className="booking">
+        <aside className="booking space-y-4">
           <div className="signup-card">
             <div className="flex-col-gap-2">
-              <h2>Informasi Ivent</h2>
+              <h2>Book Your Spot</h2>
               <p>{event.title}</p>
-            </div>
-
-            <div className="flex flex-row flex-wrap gap-2">
-              <span className="pill">{formatValue(event.tags)}</span>
-              <span className="pill">{formatValue(event.agenda)}</span>
             </div>
 
             <div className="flex-col-gap-2">
               <p>Organizer: {formatValue(event.organizer)}</p>
               <p>Slug: {event.slug}</p>
               <p>Created: {formatDate(event.created_at)}</p>
-              <p>Updated: {event.updated_at ? formatDate(event.updated_at) : "-"}</p>
+            </div>
+          <div>
+              {
+                booking > 0 ? (
+                  <p className="text-sm text-yellow-500">Join {booking} people who have already booked their spot!</p>
+                ) : (<p className="text-sm">Be the first to book your spot</p>)
+              }
+
+              <BookEvent/>
             </div>
           </div>
         </aside>
