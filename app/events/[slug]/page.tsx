@@ -3,6 +3,9 @@ import { NEXT_PUBLIC_BASE_URL } from "@/config/env";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+
+export const unstable_instant = { prefetch: "static" };
 
 type EventDetailData = {
   id: string;
@@ -61,8 +64,41 @@ const DetailItem = ({ icon, alt, label, value }: DetailItemProps) => (
   </div>
 );
 
-const EventDetailPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
-  const { slug } = await params;
+const EventDetailFallback = () => (
+  <main id="event">
+    <div className="mb-8 h-5 w-24 rounded-md bg-dark-200" />
+
+    <section className="header">
+      <div className="flex flex-row flex-wrap gap-3">
+        <span className="pill">Loading</span>
+        <span className="pill">Event</span>
+      </div>
+      <div className="h-14 w-full max-w-3xl rounded-md bg-dark-200" />
+      <div className="h-6 w-full max-w-2xl rounded-md bg-dark-200" />
+    </section>
+
+    <section className="details">
+      <div className="content">
+        <div className="banner min-h-[320px] bg-dark-200" />
+        <div className="flex-col-gap-2">
+          <div className="h-8 w-40 rounded-md bg-dark-200" />
+          <div className="h-6 w-full rounded-md bg-dark-200" />
+          <div className="h-6 w-4/5 rounded-md bg-dark-200" />
+        </div>
+      </div>
+
+      <aside className="booking space-y-4">
+        <div className="signup-card">
+          <div className="h-8 w-44 rounded-md bg-dark-200" />
+          <div className="h-5 w-full rounded-md bg-dark-200" />
+          <div className="h-10 w-full rounded-md bg-dark-200" />
+        </div>
+      </aside>
+    </section>
+  </main>
+);
+
+const EventDetailContent = async ({ slug }: { slug: string }) => {
   const baseUrl = NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
   const response = await fetch(`${baseUrl}/api/events/${slug}`, {
     cache: "no-store",
@@ -136,7 +172,7 @@ const EventDetailPage = async ({ params }: { params: Promise<{ slug: string }> }
               <p>Slug: {event.slug}</p>
               <p>Created: {formatDate(event.created_at)}</p>
             </div>
-          <div>
+            <div>
               {
                 booking > 0 ? (
                   <p className="text-sm text-yellow-500">Join {booking} people who have already booked their spot!</p>
@@ -149,6 +185,16 @@ const EventDetailPage = async ({ params }: { params: Promise<{ slug: string }> }
         </aside>
       </section>
     </main>
+  );
+};
+
+const EventDetailPage = ({ params }: { params: Promise<{ slug: string }> }) => {
+  return (
+    <Suspense fallback={<EventDetailFallback />}>
+      {params.then(({ slug }) => (
+        <EventDetailContent slug={slug} />
+      ))}
+    </Suspense>
   );
 };
 

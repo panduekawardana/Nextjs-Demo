@@ -14,7 +14,7 @@ type EventListItem = {
 };
 
 const Page = async () => {
-  'use cahce'
+  'use cache'
   cacheLife('hours');
   const response  = await fetch(`${NEXT_PUBLIC_BASE_URL}/api/events`);
   const { events = [] }: { events: EventListItem[] } = await response.json();
